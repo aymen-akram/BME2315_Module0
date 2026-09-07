@@ -10,38 +10,72 @@
 # Example: If N = 5, the output should be 0 + 1 + 1 + 2 + 3 = 7
 
 """ # you can use three double-quotes to write multi-line comments
-XXX Write your pseudocode here XXX
+INPUT an integer N
+
+SET a = 0, b = 1 
+SET count = 0
+SET total = 0
+
+WHILE count is less than N
+    ADD a to the total 
+    SET the next_val = a + b
+    SET a = b
+    SET b = next_val
+    increase the count by 1 
+
+OUTPUT total 
 """
 
 # %% ###########################################################
 # Problem 2: Comment your code
 # Comments are very helpful for others (especially when pair-coding!) and yourself to understand your code! Add comments to the following code, which will run but produces the wrong output. Once you comment the code, you should be able to identify the error and fix it (the correct total that should be printed is 12).
-N = 6
+N = 6 # the amount of Fibonacci numbers that will be summed 
 
 a = 0 # set a to the first fibonacci number
 b = 1 # set b to the second fibonacci number
-count = 0
-total = 0
+count = 0 # keeps track of how many Fibonacci numbers have been added so far 
+total = 0 # stores the total sum 
 
-while count < N:
-    total = total + b
+while count < N: # while the count is less than N which is 6
+    total = total + a # Error because originally it said "total = total + b" which had skipped the first number. Now it is fixed by starting with a 
 
-    next_value = a + b
-    a = b
-    b = next_value
+    next_value = a + b # calculates the next fibonacci number 
+    a = b # moves a forward 
+    b = next_value # makes b the next value 
 
-    count = count + 1
+    count = count + 1 # moves to the next term by increasing the count by 1 
 
-print(total)
+print(total) # prints the total sum 
 
 # %% ###########################################################
 # Problem 3: Using common Python libraries
 # What is the standard deviation of the first 10 numbers in the fibonacci sequence? Use the numpy library to calculate the standard deviation.
 
+import numpy as np 
+fibonacci_numbers = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+standard_deviation = np.std(fibonacci_numbers)
+print(fibonacci_numbers)
+print(standard_deviation)
+
 # %% ###########################################################
 # Problem 4: Don't repeat yourself by writing functions
 # Write a function that takes an integer N as input and returns the sum of the first N numbers in the fibonacci sequence.
 # Then use this function to calculate the sums for N = 5, 10, 15, 20, 25, and 30 and print them as a list.
+
+def sum_fibonacci(N):
+    a = 0 
+    b = 1
+    count = 0
+    while count < N:
+        total = total + a  
+        a, b = b, a + b 
+        count = count + 1
+    return total  
+N_values = [5, 10, 15, 20, 25, 30]
+sums = []
+for N in N_values: 
+    sums.append(sum_fibonacci(N))
+print(sums)
 
 # %% ###########################################################
 # Problem 5: Read your error messages
@@ -60,8 +94,9 @@ def find_fib_above_limit(limit):
     :return: index of the first number above limit
     :rtype: integer
     """
-    a = "0"
-    b = "1"
+    a = 0 # it was a = "0" before which was a TypeError because you can not compare an integer with a string. Therefore, the <= was not supported 
+    b = 1 # same as above 
+    index = 0 # index was not initialized before which caused a NameErrror
 
     while a <= limit:
         next_value = a + b
@@ -84,11 +119,16 @@ def sum_even_fib(limit):
     total = 0
     while b <= limit:
         if b % 2 == 0:  # This line checks if the Fibonacci number is even
-            total = b
+            total += b # This line was originally "total = +b" which was incorrect because it only assigns the value of b to total instead of adding it. The correct line should be "total += b" to get the sum of even Fibonacci numbers.
         a, b = b, a + b
     return total
 
 
 # Add your test cases here
+print(sum_even_fib(0))    # will get 0
+print(sum_even_fib(9))    # will get 10
+print(sum_even_fib(10))   # will get 10
+print(sum_even_fib(11))   # will get 10
+print(sum_even_fib(100))  # will get 44
 
 # %%
